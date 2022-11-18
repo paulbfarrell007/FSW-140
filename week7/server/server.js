@@ -82,4 +82,19 @@ res.send('Row added successfully')
 })
 })
 
+app.delete('/delete/:id',(req,res)=>{
+  var newname =''
+  var sqlcommand = `DELETE FROM post WHERE postId=${req.params.id}`
+
+  connection.query(sqlcommand, (error, results) => {
+    if (error) {
+      callback(error)
+      return
+    }
+  console.log(results)
+  res.send('Item deleted')
+  })
+
+})
+
 app.listen(port);

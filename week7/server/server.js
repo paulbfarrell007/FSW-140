@@ -1,9 +1,10 @@
 const express = require("express");
-const app = express();
-const port = 7500;
 const mysql = require ('mysql')
 var bodyParser = require('body-parser')
 const {db}=require('./database.js')
+
+const app = express();
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json());
 
 // get the client
@@ -27,7 +28,7 @@ connection.connect((err)=>{
   console.log('database connected')
 })
 
-app.get('/', (req, res) => {
+app.get('/getPosts', (req, res) => {
     // simple query
 let sqlcommand = 'SELECT * FROM post'
 
@@ -97,4 +98,7 @@ app.delete('/delete/:id',(req,res)=>{
 
 })
 
-app.listen(port);
+const port = process.env.PORT || 7500
+app.listen(port, () => {
+  console.log(`listening on port ${port}`)
+})
